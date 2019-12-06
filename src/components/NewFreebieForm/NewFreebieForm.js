@@ -27,6 +27,7 @@ class NewFreebieForm extends Component {
     })
     .then((res) => {
       this.props.handleFreebiesFormOpen();
+      this.props.fetchFreebies();
     })
     .catch((error) => console.log(error));
   }
