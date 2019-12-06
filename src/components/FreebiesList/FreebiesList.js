@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import Freebie from './Freebie/Freebie';
+import Freebies from './Freebies/Freebies';
 
 class FreebiesList extends Component {
   componentDidMount() {
@@ -10,7 +9,7 @@ class FreebiesList extends Component {
   render() {
     return (
       <div className="freebies-list container">
-        <Freebie freebies={this.props.freebies} />
+        <Freebies freebies={this.props.freebies} />
       </div>
     );
   };

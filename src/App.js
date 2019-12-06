@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar/Navbar';
-import './App.css';
 import Routes from './config/Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 class App extends Component {
   state = {
@@ -30,7 +30,6 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar currentUser={this.state.currentUser} setCurrentUser={this.setCurrentUser} logout={this.logout} />
-        <h1>App</h1>
         <Routes currentUser={this.state.currentUser} />
       </div>
     )
