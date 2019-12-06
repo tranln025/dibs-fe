@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { withRouter } from "react-router";
 import axios from 'axios';
 
@@ -22,7 +24,6 @@ class LoginModal extends Component {
       withCredentials: true,
     })
     .then((res) => {
-      console.log('res.data >>', res.data)
       this.props.setCurrentUser(res.data.data);
       this.props.history.push(`/users/${res.data.data}`);
       this.props.handleLoginModalOpen();
@@ -37,17 +38,17 @@ class LoginModal extends Component {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSubmit} >
-            <div className="form-group">
-              <label htmlFor="name">Username</label>
-              <input onChange={this.handleChange} className="form-control form-control-lg" type="text" id="username" name="username" value={this.state.username} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input onChange={this.handleChange} className="form-control form-control-lg" type="password" id="password" name="password" value={this.state.password} />
-            </div>
-            <button className="btn btn-primary float-right" type="submit">Login</button>
-          </form>
+          <Form onSubmit={this.handleSubmit} >
+            <Form.Group controlId="formGroupUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control onChange={this.handleChange} type="text" name="username" value={this.state.username} />
+              </Form.Group>
+            <Form.Group controlId="formGroupPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control onChange={this.handleChange} type="password" name="password" value={this.state.password} />
+              </Form.Group>
+            <Button className="btn btn-primary float-right" type="submit">Login</Button>
+          </Form>
         </Modal.Body>
       </Modal>
     );

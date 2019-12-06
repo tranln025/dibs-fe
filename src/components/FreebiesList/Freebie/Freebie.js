@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 const Freebie = (props) => {
   const freebies = props.freebies.map(freebie => {
     return (
-      <Card>
+      <Card key={freebie._id}>
         <Card.Img variant="top" src={freebie.photo} />
         <Card.Body>
           <Card.Title>{freebie.title} 
