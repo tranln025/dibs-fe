@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { withRouter } from "react-router";
+import axios from 'axios';
 
 class RegisterModal extends Component {
   state = {
@@ -19,8 +21,23 @@ class RegisterModal extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log('submitted register!')
-  }
+    axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, this.state, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.data.status === 400 || res.data.status === 500) {
+        this.setState({
+          usernameValid: false,
+          emailValid: false,
+        })
+      } else {
+        this.props.setCurrentUser(res.data.data);
+        this.props.history.push(`/users/${res.data.data}`);
+        this.props.handleRegisterModalOpen();
+      }
+    })
+    .catch(err => console.log(err))
+  };
 
   render() {
     return (
@@ -58,8 +75,8 @@ class RegisterModal extends Component {
           </form>
         </Modal.Body>
       </Modal>
-    )
-  }
-}
+    );
+  };
+};
 
-export default RegisterModal;
+export default withRouter(RegisterModal);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
 import Button from 'react-bootstrap/Button';
 import RegisterModal from './RegisterModal/RegisterModal';
 import LoginModal from './LoginModal/LoginModal';
@@ -32,25 +33,32 @@ class Navbar extends Component {
       <>
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="container">
-            <Link className="navbar-brand">Expand at md</Link>
+            <span className="navbar-brand">Dibs!</span>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
 
             <div className="collapse navbar-collapse" id="navbarsExample04">
               <ul className="navbar-nav ml-auto">
+                {!this.props.currentUser ?
+                <>
+                <li className="nav-item">
+                  <Button onClick={this.handleRegisterModalOpen} variant="info" className="nav-link">Register <span className="sr-only">(current)</span></Button>
+                </li>
                 <li className="nav-item active">
-                  <Button onClick={this.handleLoginModalOpen} className="nav-link">Log In <span className="sr-only">(current)</span></Button>
+                  <Button onClick={this.handleLoginModalOpen} variant="info" className="nav-link">Log In </Button>
+                </li>
+                </> : <>
+                <li className="nav-item">
+                  <Link to="/freebies" className="nav-link">Freebies</Link>
                 </li>
                 <li className="nav-item">
-                  <Button onClick={this.handleRegisterModalOpen} className="nav-link">Register</Button>
+                  <Link to="/profile" className="nav-link">Profile</Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link">Freebies</Link>
+                <li className="nav-item active">
+                  <Button onClick={this.props.logout} variant="info" className="nav-link">Log Out</Button>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link">Profile</Link>
-                </li>
+                </> }
               </ul>
             </div>
           </div>
@@ -62,4 +70,4 @@ class Navbar extends Component {
   }
 };
 
-export default Navbar;
+export default withRouter(Navbar);
