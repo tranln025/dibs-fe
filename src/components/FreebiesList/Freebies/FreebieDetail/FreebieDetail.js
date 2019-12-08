@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import EditModal from './EditModal';
+import DeleteModal from './DeleteModal';
 
 class FreebieDetail extends Component {
   state = {
@@ -66,10 +67,11 @@ class FreebieDetail extends Component {
           editModalOpen={this.state.editModalOpen} 
           handleEditModalOpen={this.handleEditModalOpen} 
         />
-        {/* <DeleteModal 
+        <DeleteModal 
+          freebie={this.state.freebie} 
           deleteModalOpen={this.state.deleteModalOpen} 
           handleDeleteModalOpen={this.handleDeleteModalOpen} 
-        /> */}
+        />
       </>
     );
   };
