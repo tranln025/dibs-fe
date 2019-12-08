@@ -1,0 +1,18 @@
+.author-control-btn {
+  cursor: pointer;
+}
+
+.freebie-author-photo {
+  width: 60px;
+  height: 50px;
+  display: inline-block;
+}
+
+.freebie-author-photo img {
+  border-radius: 50%;
+  width: 50px;
+}
+
+.freebie-author-info {
+  display: inline-block;
+}

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import CardColumns from 'react-bootstrap/CardColumns'
 import Card from 'react-bootstrap/Card';
 import { withRouter } from "react-router";
@@ -18,7 +20,7 @@ class Freebies extends Component {
             <Card.Text>{freebie.description}</Card.Text>
           </Card.Body>
           <Card.Footer>
-            <small className="text-muted">{freebie.datePosted}</small>
+            <small className="text-muted"><Moment fromNow>{freebie.datePosted}</Moment></small>
           </Card.Footer>
         </Card>
       );

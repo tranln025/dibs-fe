@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
+import './FreebieDetail.css'
 
 class FreebieDetail extends Component {
   state = {
@@ -58,8 +61,8 @@ class FreebieDetail extends Component {
     return (
       <>
         <div className="author-controls">
-          <a onClick={this.handleEditModalOpen} >Edit</a>
-          <a onClick={this.handleDeleteModalOpen} >Delete</a>
+          <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+          <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
           <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
         </div>
         <EditModal 
@@ -82,12 +85,23 @@ class FreebieDetail extends Component {
     return (
       <div className="container">
         <img className="freebie-photo" src={freebie.photo} alt={freebie.title} />
-        <img className="freebie-author-photo" src={author.photo} alt={author.username} />
         <h3>{freebie.title}</h3>
-        <small>{author.username}</small>
         <p>{freebie.address}</p>
-        <p>{freebie.datePosted}</p>
+        <p>Posted <Moment local format="MMM. DD, YYYY [at] hh:MM a">{freebie.datePosted}</Moment></p>
         <p>{freebie.description}</p>
+        <div className="seller-info">
+          <p>Seller Information</p>
+          <div className="row">
+            <div className="freebie-author-photo">
+              <img src={author.photo} alt={author.username} />
+            </div>
+            <div className="freebie-author-info">
+              <small>{author.username}</small>
+              <br />
+              <small>Dibber since <Moment local format="MMMM YYYY">{author.joinDate}</Moment></small>
+            </div>
+          </div>
+        </div>
         {this.state.author._id === localStorage.getItem('uid') ?
           this.addAuthorControls() 
           :
