@@ -15,6 +15,7 @@ class FreebieDetail extends Component {
     editModalOpen: false,
     deleteModalOpen: false,
     currentDib: {},
+    dibberIsCurrentUser: false,
   }
 
   fetchPostInfo = () => {
@@ -25,7 +26,7 @@ class FreebieDetail extends Component {
         freebie: res.data.data,
         author: res.data.data.author,
         currentDib: res.data.data.currentDib,
-      })
+      }, this.checkForDib)
     })
     .catch(err => console.log(err))
   }
@@ -62,7 +63,7 @@ class FreebieDetail extends Component {
       this.fetchPostInfo();
     })
     .catch(err => console.log(err));
-  }
+  };
 
   handleEditModalOpen = () => {
     console.log('handleEditModalOpen')
@@ -83,7 +84,11 @@ class FreebieDetail extends Component {
   };
 
   markAsClaimed = () => {
-    console.log('markAsClaimed')
+    console.log('markAsClaimed');
+    // add dib to User's dibsClaimed array
+    // remove state currentDib
+    // remove post currentDIb
+    // fetchpostinfo
   };
 
   addAuthorControls = () => {
@@ -112,24 +117,53 @@ class FreebieDetail extends Component {
     let dib = this.state.currentDib;
     if (dib) {
       let expirationTime = Date.parse(dib.timeExpired);
-      if (Date.now() < expirationTime && dib.dibber !== this.props.currentUser) {
-        return (
-          <p className="dibs-error">Someone has already called dibs! Try again later</p>
-        )
-      } else if (Date.now() < expirationTime && dib.dibber === this.props.currentUser) {
-        return (
-          <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{dib.timeExpired}</Moment> or you'll lose your dibs!
-          </p>
-        )
-      } else if (Date.now() > expirationTime) {
-        this.deleteDib();
+      if (Date.now() < expirationTime) {
+        if (dib.dibber !== this.props.currentUser) {
+          this.setState({
+            dibberIsCurrentUser: false,
+          })
+        } else {
+          this.setState({
+            dibberIsCurrentUser: true,
+          })
+        }
+      } else {
+        if (!dib.claimed) {
+          this.setState({
+            currentDib: null,
+          });
+          axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`,
+          {currentDib: null}, {
+            withCredentials: true,
+          })
+        } else {
+          this.setState({
+            currentDib: null,
+          });
+          axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`,
+          {currentDib: null}, {
+            withCredentials: true,
+          })
+        };
       };
+    };
+  };
+
+  showDibError = () => {
+    if (this.state.currentDib && this.state.dibberIsCurrentUser) {
+      return (
+        <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{this.state.currentDib.timeExpired}</Moment> or you'll lose your dibs! </p>
+      )
+    } else if (this.state.currentDib && !this.state.dibberIsCurrentUser) {
+      return (
+        <p className="dibs-error">Someone has already called dibs! Try again later</p>
+      )
     } else {
       return (
         <></>
-      )
-    }
-  }
+      );
+    };
+  };
 
   render() {
     const freebie = this.state.freebie;
@@ -164,7 +198,7 @@ class FreebieDetail extends Component {
             disabled={this.state.currentDib}>DIBS!
           </Button>
         }
-        {this.checkForDib()}
+        {this.showDibError()}
       </div>
     );
   };
