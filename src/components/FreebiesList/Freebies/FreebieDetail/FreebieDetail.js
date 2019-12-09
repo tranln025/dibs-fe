@@ -34,7 +34,7 @@ class FreebieDetail extends Component {
     this.fetchPostInfo();
   };
 
-  handleDibs = () => {
+  createDib = () => {
     console.log('dibs clicked');
     const body = {
       post: this.state.freebie._id,
@@ -54,6 +54,15 @@ class FreebieDetail extends Component {
     })
     .catch(err => console.log(err));
   };
+
+  deleteDib = () => {
+    console.log('dib deleted');
+    axios.delete(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`)
+    .then((res) => {
+      this.fetchPostInfo();
+    })
+    .catch(err => console.log(err));
+  }
 
   handleEditModalOpen = () => {
     console.log('handleEditModalOpen')
@@ -99,15 +108,22 @@ class FreebieDetail extends Component {
     );
   };
 
-  showDibsError = () => {
-    if (this.state.currentDib && this.state.currentDib.dibber !== this.props.currentUser) {
-      return (
-        <p className="dibs-error">Someone has already called dibs! Try again later</p>
-      )
-    } else if (this.state.currentDib && this.state.currentDib.dibber === this.props.currentUser) {
-      return (
-        <p className="dibs-error">You've called dibs! Claim your prize within one hour or you'll lose your dibs!</p>
-      )
+  checkForDib = () => {
+    let dib = this.state.currentDib;
+    if (dib) {
+      let expirationTime = Date.parse(dib.timeExpired);
+      if (Date.now() < expirationTime && dib.dibber !== this.props.currentUser) {
+        return (
+          <p className="dibs-error">Someone has already called dibs! Try again later</p>
+        )
+      } else if (Date.now() < expirationTime && dib.dibber === this.props.currentUser) {
+        return (
+          <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{dib.timeExpired}</Moment> or you'll lose your dibs!
+          </p>
+        )
+      } else if (Date.now() > expirationTime) {
+        this.deleteDib();
+      };
     } else {
       return (
         <></>
@@ -123,7 +139,7 @@ class FreebieDetail extends Component {
         <img className="freebie-photo" src={freebie.photo} alt={freebie.title} />
         <h3>{freebie.title}</h3>
         <p>{freebie.address}</p>
-        <p>Posted <Moment local format="MMM. DD, YYYY [at] hh:MM a">{freebie.datePosted}</Moment></p>
+        <p>Posted <Moment local format="MMM. DD, YYYY [at] h:MM a">{freebie.datePosted}</Moment></p>
         <p>{freebie.description}</p>
         <div className="seller-info">
           <p>Seller Information</p>
@@ -142,13 +158,13 @@ class FreebieDetail extends Component {
           this.addAuthorControls() 
           :
           <Button 
-            onClick={this.handleDibs} 
+            onClick={this.createDib} 
             className="btn btn-primary dibs-btn" 
-            title={this.state.currentDib ? "Uh oh! Someone else called dibs first!" : null} 
+            title={this.state.currentDib ? "Item has been dibbed" : null} 
             disabled={this.state.currentDib}>DIBS!
           </Button>
         }
-        {this.showDibsError()}
+        {this.checkForDib()}
       </div>
     );
   };

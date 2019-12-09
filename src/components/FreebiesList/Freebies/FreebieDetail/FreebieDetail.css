@@ -24,3 +24,7 @@
 .dibs-btn:disabled {
   cursor:not-allowed;
 }
+
+.freebie-photo {
+  max-width: 500px;
+}
