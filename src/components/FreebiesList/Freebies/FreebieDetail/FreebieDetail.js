@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Moment from 'react-moment';
@@ -13,6 +14,7 @@ class FreebieDetail extends Component {
     author: {},
     editModalOpen: false,
     deleteModalOpen: false,
+    currentDib: {},
   }
 
   fetchPostInfo = () => {
@@ -21,7 +23,8 @@ class FreebieDetail extends Component {
     .then(res => {
       this.setState({
         freebie: res.data.data,
-        author: res.data.data.author
+        author: res.data.data.author,
+        currentDib: res.data.data.currentDib,
       })
     })
     .catch(err => console.log(err))
@@ -31,9 +34,35 @@ class FreebieDetail extends Component {
     this.fetchPostInfo();
   };
 
-  handleDibs = () => {
-    console.log('dibs clicked')
+  createDib = () => {
+    console.log('dibs clicked');
+    const body = {
+      post: this.state.freebie._id,
+      dibber: this.props.currentUser,
+    };
+
+    axios.post(`${process.env.REACT_APP_API_URL}/dibs`,
+    body, {
+      withCredentials: true,
+    })
+    .then(res => {
+      console.log(res.data)
+      this.setState({
+        currentDib: res.data.data.currentDib,
+      });
+      this.fetchPostInfo();
+    })
+    .catch(err => console.log(err));
   };
+
+  deleteDib = () => {
+    console.log('dib deleted');
+    axios.delete(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`)
+    .then((res) => {
+      this.fetchPostInfo();
+    })
+    .catch(err => console.log(err));
+  }
 
   handleEditModalOpen = () => {
     console.log('handleEditModalOpen')
@@ -79,6 +108,29 @@ class FreebieDetail extends Component {
     );
   };
 
+  checkForDib = () => {
+    let dib = this.state.currentDib;
+    if (dib) {
+      let expirationTime = Date.parse(dib.timeExpired);
+      if (Date.now() < expirationTime && dib.dibber !== this.props.currentUser) {
+        return (
+          <p className="dibs-error">Someone has already called dibs! Try again later</p>
+        )
+      } else if (Date.now() < expirationTime && dib.dibber === this.props.currentUser) {
+        return (
+          <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{dib.timeExpired}</Moment> or you'll lose your dibs!
+          </p>
+        )
+      } else if (Date.now() > expirationTime) {
+        this.deleteDib();
+      };
+    } else {
+      return (
+        <></>
+      )
+    }
+  }
+
   render() {
     const freebie = this.state.freebie;
     const author = this.state.author;
@@ -87,7 +139,7 @@ class FreebieDetail extends Component {
         <img className="freebie-photo" src={freebie.photo} alt={freebie.title} />
         <h3>{freebie.title}</h3>
         <p>{freebie.address}</p>
-        <p>Posted <Moment local format="MMM. DD, YYYY [at] hh:MM a">{freebie.datePosted}</Moment></p>
+        <p>Posted <Moment local format="MMM. DD, YYYY [at] h:MM a">{freebie.datePosted}</Moment></p>
         <p>{freebie.description}</p>
         <div className="seller-info">
           <p>Seller Information</p>
@@ -102,14 +154,20 @@ class FreebieDetail extends Component {
             </div>
           </div>
         </div>
-        {this.state.author._id === localStorage.getItem('uid') ?
+        {this.state.author._id === this.props.currentUser ?
           this.addAuthorControls() 
           :
-          <Button onClick={this.handleDibs} className="btn btn-primary">DIBS!</Button>
+          <Button 
+            onClick={this.createDib} 
+            className="btn btn-primary dibs-btn" 
+            title={this.state.currentDib ? "Item has been dibbed" : null} 
+            disabled={this.state.currentDib}>DIBS!
+          </Button>
         }
+        {this.checkForDib()}
       </div>
     );
   };
 };
 
-export default FreebieDetail;
+export default withRouter(FreebieDetail);

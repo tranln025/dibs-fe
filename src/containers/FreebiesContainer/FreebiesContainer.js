@@ -32,7 +32,10 @@ class FreebiesContainer extends Component {
       <>
         <h1>FreebiesContainer</h1>
         <button onClick={this.handleFreebiesFormOpen}>Add Freebie</button>
-        <FreebiesList freebies={this.state.freebies} fetchFreebies={this.fetchFreebies} />
+        <FreebiesList
+          freebies={this.state.freebies} 
+          fetchFreebies={this.fetchFreebies} 
+        />
         <NewFreebieForm 
           freebiesFormOpen={this.state.freebiesFormOpen} 
           handleFreebiesFormOpen={this.handleFreebiesFormOpen} 

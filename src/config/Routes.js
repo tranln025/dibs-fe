@@ -9,7 +9,7 @@ export default ({ currentUser }) => (
   <Switch>
     <Route exact path="/" component={Landing} />
     <Route exact path="/freebies" render={() => <FreebiesContainer currentUser={currentUser} />} />
-    <Route path="/freebies/:id" component={FreebieDetail} />} />
+    <Route path="/freebies/:id" render={() => <FreebieDetail currentUser={currentUser} />} />
     <Route path="/profile" component={ProfileContainer} />
   </Switch>
 )
