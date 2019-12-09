@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Moment from 'react-moment';
@@ -13,6 +14,7 @@ class FreebieDetail extends Component {
     author: {},
     editModalOpen: false,
     deleteModalOpen: false,
+    currentDib: {},
   }
 
   fetchPostInfo = () => {
@@ -21,7 +23,8 @@ class FreebieDetail extends Component {
     .then(res => {
       this.setState({
         freebie: res.data.data,
-        author: res.data.data.author
+        author: res.data.data.author,
+        currentDib: res.data.data.currentDib,
       })
     })
     .catch(err => console.log(err))
@@ -32,7 +35,24 @@ class FreebieDetail extends Component {
   };
 
   handleDibs = () => {
-    console.log('dibs clicked')
+    console.log('dibs clicked');
+    const body = {
+      post: this.state.freebie._id,
+      dibber: this.props.currentUser,
+    };
+
+    axios.post(`${process.env.REACT_APP_API_URL}/dibs`,
+    body, {
+      withCredentials: true,
+    })
+    .then(res => {
+      console.log(res.data)
+      this.setState({
+        currentDib: res.data.data.currentDib,
+      });
+      this.fetchPostInfo();
+    })
+    .catch(err => console.log(err));
   };
 
   handleEditModalOpen = () => {
@@ -79,6 +99,22 @@ class FreebieDetail extends Component {
     );
   };
 
+  showDibsError = () => {
+    if (this.state.currentDib && this.state.currentDib.dibber !== this.props.currentUser) {
+      return (
+        <p className="dibs-error">Someone has already called dibs! Try again later</p>
+      )
+    } else if (this.state.currentDib && this.state.currentDib.dibber === this.props.currentUser) {
+      return (
+        <p className="dibs-error">You've called dibs! Claim your prize within one hour or you'll lose your dibs!</p>
+      )
+    } else {
+      return (
+        <></>
+      )
+    }
+  }
+
   render() {
     const freebie = this.state.freebie;
     const author = this.state.author;
@@ -102,14 +138,20 @@ class FreebieDetail extends Component {
             </div>
           </div>
         </div>
-        {this.state.author._id === localStorage.getItem('uid') ?
+        {this.state.author._id === this.props.currentUser ?
           this.addAuthorControls() 
           :
-          <Button onClick={this.handleDibs} className="btn btn-primary">DIBS!</Button>
+          <Button 
+            onClick={this.handleDibs} 
+            className="btn btn-primary dibs-btn" 
+            title={this.state.currentDib ? "Uh oh! Someone else called dibs first!" : null} 
+            disabled={this.state.currentDib}>DIBS!
+          </Button>
         }
+        {this.showDibsError()}
       </div>
     );
   };
 };
 
-export default FreebieDetail;
+export default withRouter(FreebieDetail);

@@ -16,3 +16,11 @@
 .freebie-author-info {
   display: inline-block;
 }
+
+.dibs-error {
+  color: firebrick;
+}
+
+.dibs-btn:disabled {
+  cursor:not-allowed;
+}
