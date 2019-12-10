@@ -24,7 +24,7 @@
   text-align: center;
 }
 
-.avatar-container:hover .image {
+.avatar-container:hover .avatar-image {
   opacity: 0.3;
   cursor: pointer;
 }

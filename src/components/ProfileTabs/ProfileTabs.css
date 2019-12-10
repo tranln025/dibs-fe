@@ -32,7 +32,7 @@
   text-align: center;
 }
 
-.img-overlay-container:hover .image {
+.img-overlay-container:hover .post-image {
   opacity: 0.3;
 }
 
