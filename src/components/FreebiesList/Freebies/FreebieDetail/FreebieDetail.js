@@ -122,13 +122,16 @@ class FreebieDetail extends Component {
   };
 
   addAuthorControls = () => {
-    if (this.state.currentDib) {
+    // if (this.state.currentDib) {
       return (
         <>
           <div className="author-controls">
             <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
             <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-            <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+            {this.state.currentDib ?
+              <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+              : null
+            }
           </div>
           <EditModal 
             freebie={this.state.freebie} 
@@ -142,7 +145,7 @@ class FreebieDetail extends Component {
           />
         </>
       );
-    }
+    // }
   };
 
   checkForDib = () => {
@@ -178,10 +181,6 @@ class FreebieDetail extends Component {
 
   showDibError = () => {
     if (this.state.currentDib && this.state.dibberIsCurrentUser) {
-      const expTime = this.state.currentDib.timeExpired;
-      console.log("expTime>>>", expTime);
-      // const expTimeRounded = expTime
-      
       return (
         <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{this.state.currentDib.timeExpired}</Moment> or you'll lose your dibs! </p>
       )
@@ -230,6 +229,7 @@ class FreebieDetail extends Component {
           </Button>
         }
         {this.showDibError()}
+        {this.state.freebie.claimant ? <h2 className="claimed-label">CLAIMED</h2> : null}
       </div>
     );
   };

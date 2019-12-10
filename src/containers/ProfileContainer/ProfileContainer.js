@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ProfileUserInfo from '../../components/ProfileUserInfo/ProfileUserInfo';
 import ProfileTabs from '../../components/ProfileTabs/ProfileTabs';
 
 class ProfileContainer extends Component {
@@ -12,7 +13,6 @@ class ProfileContainer extends Component {
   componentDidMount() {
     axios.get(`${process.env.REACT_APP_API_URL}/posts`)
     .then(res => {
-      console.log(res.data.data);
       const allPosts = res.data.data;
       const myPosts = allPosts
         .filter(post => post.author._id === this.state.currentUser)
@@ -23,7 +23,7 @@ class ProfileContainer extends Component {
       this.setState({
         myPosts,
         dibsClaimed,
-      })
+      });
     })
     .catch(err => console.log(err))
   }
@@ -33,9 +33,10 @@ class ProfileContainer extends Component {
       <>
         <div className="container">
           <h1>ProfileContainer</h1>
+          <ProfileUserInfo userObject={this.state.userObject}/>
           <ProfileTabs myPosts={this.state.myPosts} dibsClaimed={this.state.dibsClaimed} />
         </div>
-    </>
+      </>
     )
   }
 }

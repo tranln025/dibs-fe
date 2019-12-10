@@ -28,3 +28,7 @@
 .freebie-photo {
   max-width: 500px;
 }
+
+.claimed-label {
+  color: red;
+}
