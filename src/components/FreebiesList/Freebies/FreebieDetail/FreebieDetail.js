@@ -41,13 +41,11 @@ class FreebieDetail extends Component {
       post: this.state.freebie._id,
       dibber: this.props.currentUser,
     };
-
     axios.post(`${process.env.REACT_APP_API_URL}/dibs`,
     body, {
       withCredentials: true,
     })
     .then(res => {
-      console.log(res.data)
       this.setState({
         currentDib: res.data.data.currentDib,
       });
@@ -85,32 +83,87 @@ class FreebieDetail extends Component {
 
   markAsClaimed = () => {
     console.log('markAsClaimed');
+    
+    // mark dib as claimed
+    console.log("dib IDDDDD >>> ", this.state.currentDib._id);
+    axios.put(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`, {claimed: true}, {
+      withCredentials: true,
+    })
+    .then(res => {
+      console.log("dib data after claimed: true >>", res.data)
+    })
+    .then()
+    .catch(err => console.log(err));
+
     // add dib to User's dibsClaimed array
+      // find User by id, perform backend function that adds dib to dibsClaimed
+    axios.get(`${process.env.REACT_APP_API_URL}/users/${this.state.currentDib.dibber}/addClaimedDib`, {
+      params: {
+        dibberId: this.state.currentDib.dibber,
+        dibId: this.state.currentDib._id,
+      }
+    })
+    .then(res => {
+      console.log("add dibs to dibsClaimed res >>>", res);
+    })
+    .catch(err => console.log(err));
+
+    
+
+
+    // add dib to User's dibsClaimed array
+    // axios.get(`${process.env.REACT_APP_API_URL}/users/${this.state.currentDib.dibber}`, {
+    //   withCredentials: true,
+    // })
+    // .then(res => {
+    //   console.log("res.data.data >>>", res.data.data); // user object
+    //   res.data.data.dibsClaimed.concat(this.state.currentDib._id);
+
+
     // remove state currentDib
-    // remove post currentDIb
-    // fetchpostinfo
-  };
+    //   this.setState({
+    //     currentDib: null,
+    //   });
+    // })
+    // .catch(err => console.log(err))
+
+
+    // // remove post currentDIb
+    // axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`, {currentDib: null}, {
+    //     withCredentials: true,
+    // })
+    // .then(res => {
+    //   console.log(res)
+    // })
+    
+    // .catch(err => console.log(err))
+
+    //   // rerender
+    // this.fetchPostInfo();
+  }
 
   addAuthorControls = () => {
-    return (
-      <>
-        <div className="author-controls">
-          <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-          <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-          <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
-        </div>
-        <EditModal 
-          freebie={this.state.freebie} 
-          editModalOpen={this.state.editModalOpen} 
-          handleEditModalOpen={this.handleEditModalOpen} 
-        />
-        <DeleteModal 
-          freebie={this.state.freebie} 
-          deleteModalOpen={this.state.deleteModalOpen} 
-          handleDeleteModalOpen={this.handleDeleteModalOpen} 
-        />
-      </>
-    );
+    if (this.state.currentDib) {
+      return (
+        <>
+          <div className="author-controls">
+            <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+            <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+            <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+          </div>
+          <EditModal 
+            freebie={this.state.freebie} 
+            editModalOpen={this.state.editModalOpen} 
+            handleEditModalOpen={this.handleEditModalOpen} 
+          />
+          <DeleteModal 
+            freebie={this.state.freebie} 
+            deleteModalOpen={this.state.deleteModalOpen} 
+            handleDeleteModalOpen={this.handleDeleteModalOpen} 
+          />
+        </>
+      );
+    }
   };
 
   checkForDib = () => {
@@ -129,13 +182,7 @@ class FreebieDetail extends Component {
         }
       } else {
         if (!dib.claimed) {
-          this.setState({
-            currentDib: null,
-          });
-          axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`,
-          {currentDib: null}, {
-            withCredentials: true,
-          })
+          this.deleteDib();
         } else {
           this.setState({
             currentDib: null,
@@ -144,6 +191,7 @@ class FreebieDetail extends Component {
           {currentDib: null}, {
             withCredentials: true,
           })
+          .catch(err => console.log(err))
         };
       };
     };
@@ -156,7 +204,7 @@ class FreebieDetail extends Component {
       )
     } else if (this.state.currentDib && !this.state.dibberIsCurrentUser) {
       return (
-        <p className="dibs-error">Someone has already called dibs! Try again later</p>
+        <p className="dibs-error">Someone has called dibs!</p>
       )
     } else {
       return (
