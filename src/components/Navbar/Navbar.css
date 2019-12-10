@@ -1,0 +1,41 @@
+.navbar-brand {
+  font-family: 'Galada', cursive;
+  font-size: 35px !important;
+  line-height: 1 !important;
+}
+
+.navbar-light .navbar-brand {
+  color: rgb(15, 185, 177) !important;
+}
+
+.nav-item {
+  margin-right: 15px;
+}
+
+.navbar-light .navbar-nav .active>.nav-link {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 600;
+  font-family: 'Raleway', sans-serif;
+}
+
+.navbar-light .navbar-nav .login:hover {
+  color: rgba(15, 185, 177, 1) !important;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-weight: 600;
+  color: rgba(15, 185, 177, .8) !important;
+  font-family: 'Raleway', sans-serif;
+}
+
+.btn-info {
+  background-color: rgba(15, 185, 177, 1) !important;
+  border-color: rgba(15, 185, 177, 1) !important;
+}
+
+.btn-info:hover {
+  background-color: rgb(14, 163, 156) !important;
+  border-color: rgb(14, 163, 156) !important;
+}

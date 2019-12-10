@@ -116,9 +116,9 @@ class FreebieDetail extends Component {
       // Remove currentDib from state
       this.setState({
         currentDib: null,
-      });
+      }, this.fetchPostInfo)
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
   };
 
   addAuthorControls = () => {
@@ -126,8 +126,13 @@ class FreebieDetail extends Component {
       return (
         <>
           <div className="author-controls">
-            <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-            <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+            {!this.state.freebie.claimant ?
+            <>
+              <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+              <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+            </>
+            : null
+            }
             {this.state.currentDib ?
               <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
               : null

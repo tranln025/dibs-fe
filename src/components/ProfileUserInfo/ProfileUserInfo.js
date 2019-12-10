@@ -12,7 +12,8 @@ class ProfileUserInfo extends Component {
   };
 
   fetchUserInfo = () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/users/${this.props.currentUser}`, {
+    const currentUser = localStorage.getItem('uid')
+    axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser}`, {
       withCredentials: true,
     })
     .then(res => {
