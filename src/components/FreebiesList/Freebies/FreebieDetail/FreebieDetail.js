@@ -107,19 +107,18 @@ class FreebieDetail extends Component {
     })
     .catch(err => console.log(err));
 
-    // Remove currentDib from post instance
+    // Remove currentDib and add dibber as claimant from post instance
     axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`, 
-      { currentDib: null }, 
+      { currentDib: null, claimant: this.state.currentDib.dibber }, 
       { withCredentials: true, })
     .then(res => {
-      console.log(res)
+      console.log(res);
+      // Remove currentDib from state
+      this.setState({
+        currentDib: null,
+      });
     })
     .catch(err => console.log(err))
-
-    // Remove currentDib from state
-    this.setState({
-      currentDib: null,
-    });
   };
 
   addAuthorControls = () => {
