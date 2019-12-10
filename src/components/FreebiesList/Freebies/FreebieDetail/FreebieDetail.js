@@ -178,6 +178,10 @@ class FreebieDetail extends Component {
 
   showDibError = () => {
     if (this.state.currentDib && this.state.dibberIsCurrentUser) {
+      const expTime = this.state.currentDib.timeExpired;
+      console.log("expTime>>>", expTime);
+      // const expTimeRounded = expTime
+      
       return (
         <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{this.state.currentDib.timeExpired}</Moment> or you'll lose your dibs! </p>
       )
