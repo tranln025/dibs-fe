@@ -84,19 +84,18 @@ class FreebieDetail extends Component {
   markAsClaimed = () => {
     console.log('markAsClaimed');
     
-    // mark dib as claimed
+    // Mark dib as claimed: true
     console.log("dib IDDDDD >>> ", this.state.currentDib._id);
-    axios.put(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`, {claimed: true}, {
-      withCredentials: true,
-    })
+    axios.put(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`,
+      {claimed: true}, 
+      { withCredentials: true, })
     .then(res => {
       console.log("dib data after claimed: true >>", res.data)
     })
     .then()
     .catch(err => console.log(err));
 
-    // add dib to User's dibsClaimed array
-      // find User by id, perform backend function that adds dib to dibsClaimed
+    // Add dib to User's dibsClaimed array
     axios.get(`${process.env.REACT_APP_API_URL}/users/${this.state.currentDib.dibber}/addClaimedDib`, {
       params: {
         dibberId: this.state.currentDib.dibber,
@@ -108,39 +107,20 @@ class FreebieDetail extends Component {
     })
     .catch(err => console.log(err));
 
-    
+    // Remove currentDib from post instance
+    axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`, 
+      { currentDib: null }, 
+      { withCredentials: true, })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.log(err))
 
-
-    // add dib to User's dibsClaimed array
-    // axios.get(`${process.env.REACT_APP_API_URL}/users/${this.state.currentDib.dibber}`, {
-    //   withCredentials: true,
-    // })
-    // .then(res => {
-    //   console.log("res.data.data >>>", res.data.data); // user object
-    //   res.data.data.dibsClaimed.concat(this.state.currentDib._id);
-
-
-    // remove state currentDib
-    //   this.setState({
-    //     currentDib: null,
-    //   });
-    // })
-    // .catch(err => console.log(err))
-
-
-    // // remove post currentDIb
-    // axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`, {currentDib: null}, {
-    //     withCredentials: true,
-    // })
-    // .then(res => {
-    //   console.log(res)
-    // })
-    
-    // .catch(err => console.log(err))
-
-    //   // rerender
-    // this.fetchPostInfo();
-  }
+    // Remove currentDib from state
+    this.setState({
+      currentDib: null,
+    });
+  };
 
   addAuthorControls = () => {
     if (this.state.currentDib) {
