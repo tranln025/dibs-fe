@@ -3,6 +3,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import EditAvatarModal from './EditAvatarModal/EditAvatarModal';
+import './ProfileUserInfo.css';
 
 class ProfileUserInfo extends Component {
   state = {
@@ -38,7 +39,12 @@ class ProfileUserInfo extends Component {
     const user = this.state.userObject;
     return (
       <div className="user-info">
-        <a onClick={this.handleEditAvatarModal}><img src={user.photo} /></a>
+        <div onClick={this.handleEditAvatarModal} className="avatar-container">
+          <img src={user.photo} alt="Avatar" className="avatar-image" />
+          <div className="middle">
+            <div className="text">Update</div>
+          </div>
+        </div>
         <p>{user.username}</p>
         <p>{user.firstName} {user.lastName}</p>
         <p>Dibber since <Moment local format="MMMM YYYY">{user.joinDate}</Moment></p>
