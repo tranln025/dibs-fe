@@ -12,8 +12,10 @@ class FreebiesContainer extends Component {
   fetchFreebies = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/posts`)
     .then(res => {
+      const freebies = res.data.data;
+      const unclaimedFreebies = freebies.filter((item) => !item.claimant)
       this.setState({
-        freebies: res.data.data
+        freebies: unclaimedFreebies.sort((a, b) => (a.datePosted < b.datePosted) ? 1 : -1)
       })
     })
     .catch(err => console.log(err));
