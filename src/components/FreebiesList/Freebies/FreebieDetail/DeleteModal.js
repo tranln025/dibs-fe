@@ -11,10 +11,10 @@ class DeleteModal extends Component {
 
   handleDelete = () => {
     axios.delete(`${process.env.REACT_APP_API_URL}/posts/${this.props.freebie._id}`)
-      .then((res) => {
-        this.props.history.goBack()
-      })
-      .catch(err => console.log(err));
+    .then((res) => {
+      this.props.history.goBack()
+    })
+    .catch(err => console.log(err));
   };
 
   handleCancel = () => {

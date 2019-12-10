@@ -15,6 +15,7 @@ class FreebieDetail extends Component {
     editModalOpen: false,
     deleteModalOpen: false,
     currentDib: {},
+    dibberIsCurrentUser: false,
   }
 
   fetchPostInfo = () => {
@@ -25,7 +26,7 @@ class FreebieDetail extends Component {
         freebie: res.data.data,
         author: res.data.data.author,
         currentDib: res.data.data.currentDib,
-      })
+      }, this.checkForDib)
     })
     .catch(err => console.log(err))
   }
@@ -40,13 +41,11 @@ class FreebieDetail extends Component {
       post: this.state.freebie._id,
       dibber: this.props.currentUser,
     };
-
     axios.post(`${process.env.REACT_APP_API_URL}/dibs`,
     body, {
       withCredentials: true,
     })
     .then(res => {
-      console.log(res.data)
       this.setState({
         currentDib: res.data.data.currentDib,
       });
@@ -62,7 +61,7 @@ class FreebieDetail extends Component {
       this.fetchPostInfo();
     })
     .catch(err => console.log(err));
-  }
+  };
 
   handleEditModalOpen = () => {
     console.log('handleEditModalOpen')
@@ -83,53 +82,115 @@ class FreebieDetail extends Component {
   };
 
   markAsClaimed = () => {
-    console.log('markAsClaimed')
+    console.log('markAsClaimed');
+    
+    // Mark dib as claimed: true
+    console.log("dib IDDDDD >>> ", this.state.currentDib._id);
+    axios.put(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`,
+      {claimed: true}, 
+      { withCredentials: true, })
+    .then(res => {
+      console.log("dib data after claimed: true >>", res.data)
+    })
+    .then()
+    .catch(err => console.log(err));
+
+    // Add dib to User's dibsClaimed array
+    axios.get(`${process.env.REACT_APP_API_URL}/users/${this.state.currentDib.dibber}/addClaimedDib`, {
+      params: {
+        dibberId: this.state.currentDib.dibber,
+        dibId: this.state.currentDib._id,
+      }
+    })
+    .then(res => {
+      console.log("add dibs to dibsClaimed res >>>", res);
+    })
+    .catch(err => console.log(err));
+
+    // Remove currentDib and add dibber as claimant from post instance
+    axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`, 
+      { currentDib: null, claimant: this.state.currentDib.dibber }, 
+      { withCredentials: true, })
+    .then(res => {
+      console.log(res);
+      // Remove currentDib from state
+      this.setState({
+        currentDib: null,
+      });
+    })
+    .catch(err => console.log(err))
   };
 
   addAuthorControls = () => {
-    return (
-      <>
-        <div className="author-controls">
-          <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-          <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-          <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
-        </div>
-        <EditModal 
-          freebie={this.state.freebie} 
-          editModalOpen={this.state.editModalOpen} 
-          handleEditModalOpen={this.handleEditModalOpen} 
-        />
-        <DeleteModal 
-          freebie={this.state.freebie} 
-          deleteModalOpen={this.state.deleteModalOpen} 
-          handleDeleteModalOpen={this.handleDeleteModalOpen} 
-        />
-      </>
-    );
+    if (this.state.currentDib) {
+      return (
+        <>
+          <div className="author-controls">
+            <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+            <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+            <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+          </div>
+          <EditModal 
+            freebie={this.state.freebie} 
+            editModalOpen={this.state.editModalOpen} 
+            handleEditModalOpen={this.handleEditModalOpen} 
+          />
+          <DeleteModal 
+            freebie={this.state.freebie} 
+            deleteModalOpen={this.state.deleteModalOpen} 
+            handleDeleteModalOpen={this.handleDeleteModalOpen} 
+          />
+        </>
+      );
+    }
   };
 
   checkForDib = () => {
     let dib = this.state.currentDib;
     if (dib) {
       let expirationTime = Date.parse(dib.timeExpired);
-      if (Date.now() < expirationTime && dib.dibber !== this.props.currentUser) {
-        return (
-          <p className="dibs-error">Someone has already called dibs! Try again later</p>
-        )
-      } else if (Date.now() < expirationTime && dib.dibber === this.props.currentUser) {
-        return (
-          <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{dib.timeExpired}</Moment> or you'll lose your dibs!
-          </p>
-        )
-      } else if (Date.now() > expirationTime) {
-        this.deleteDib();
+      if (Date.now() < expirationTime) {
+        if (dib.dibber !== this.props.currentUser) {
+          this.setState({
+            dibberIsCurrentUser: false,
+          })
+        } else {
+          this.setState({
+            dibberIsCurrentUser: true,
+          })
+        }
+      } else {
+        if (!dib.claimed) {
+          this.deleteDib();
+        } else {
+          this.setState({
+            currentDib: null,
+          });
+          axios.put(`${process.env.REACT_APP_API_URL}/posts/${this.state.freebie._id}`,
+          {currentDib: null}, {
+            withCredentials: true,
+          })
+          .catch(err => console.log(err))
+        };
       };
+    };
+  };
+
+  showDibError = () => {
+    if (this.state.currentDib && this.state.dibberIsCurrentUser) {
+      return (
+        <p className="dibs-error">You've called dibs! Claim your prize by <Moment format="h:mm a">{this.state.currentDib.timeExpired}</Moment> or you'll lose your dibs! </p>
+      )
+    } else if (this.state.currentDib && !this.state.dibberIsCurrentUser) {
+      return (
+        <p className="dibs-error">Someone has called dibs!</p>
+      )
     } else {
       return (
         <></>
-      )
-    }
-  }
+      );
+    };
+  };
 
   render() {
     const freebie = this.state.freebie;
@@ -164,7 +225,7 @@ class FreebieDetail extends Component {
             disabled={this.state.currentDib}>DIBS!
           </Button>
         }
-        {this.checkForDib()}
+        {this.showDibError()}
       </div>
     );
   };
