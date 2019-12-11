@@ -9,6 +9,7 @@ class ProfileUserInfo extends Component {
   state = {
     userObject: {},
     editAvatarModal: false,
+    // activeDib: {},
   };
 
   fetchUserInfo = () => {
@@ -24,8 +25,22 @@ class ProfileUserInfo extends Component {
     .catch(err => console.log(err))
   }
 
+  // getActiveDib = () => {
+  //   axios.get(`${process.env.REACT_APP_API_URL}/posts`, {
+  //     withCredentials: true,
+  //   })
+  //   .then(res => {
+  //     let activeDib = res.data.data.filter(post => post.currentDib && post.currentDib.dibber === this.state.userObject._id);
+  //     this.setState({
+  //       activeDib,
+  //     })
+  //   })
+  //   .catch(err => console.log(err))
+  // }
+
   componentDidMount() {
     this.fetchUserInfo();
+    // this.getActiveDib();
   }
 
   handleEditAvatarModal = () => {
@@ -39,7 +54,7 @@ class ProfileUserInfo extends Component {
   render() {
     const user = this.state.userObject;
     return (
-      <div className="user-info">
+      <div className="user-info col-md-3">
         <div onClick={this.handleEditAvatarModal} className="avatar-container">
           <img src={user.photo} alt="Avatar" className="avatar-image" />
           <div className="middle">
@@ -49,6 +64,7 @@ class ProfileUserInfo extends Component {
         <p>{user.username}</p>
         <p>{user.firstName} {user.lastName}</p>
         <p>Dibber since <Moment local format="MMMM YYYY">{user.joinDate}</Moment></p>
+        <h4 className="current-dib">{}</h4>
         <EditAvatarModal 
           userObject={this.state.userObject}
           editAvatarModal={this.state.editAvatarModal} 

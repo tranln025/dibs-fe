@@ -11,6 +11,8 @@
 .freebie-author-photo img {
   border-radius: 50%;
   width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .freebie-author-info {
