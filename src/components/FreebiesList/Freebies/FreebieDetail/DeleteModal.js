@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import './DeleteModal.css';
 
 class DeleteModal extends Component {
   state = {
@@ -23,7 +24,7 @@ class DeleteModal extends Component {
 
   render() {
     return (
-      <Modal show={this.props.deleteModalOpen} onHide={this.props.handleDeleteModalOpen}>
+      <Modal className="delete-modal" show={this.props.deleteModalOpen} onHide={this.props.handleDeleteModalOpen}>
         <Modal.Header closeButton>
           <Modal.Title>Are you sure you want to delete "{this.props.freebie.title}"?</Modal.Title>
         </Modal.Header>

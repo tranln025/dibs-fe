@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
+import CommentsContainer from '../../../../containers/CommentsContainer/CommentsContainer';
 import './FreebieDetail.css'
 import claimed from './claimed.png'
 
@@ -154,8 +155,8 @@ class FreebieDetail extends Component {
           } else {
             return (
               <div className="author-control-btn-block">
-                <span className="author-control-btn" onClick={this.handleEditModalOpen} ><i class="fas fa-edit fa-2x"></i></span>
-                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} ><i class="fas fa-trash-alt fa-2x"></i></span>
+                <span className="author-control-btn" onClick={this.handleEditModalOpen} ><i className="fas fa-edit fa-2x"></i></span>
+                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} ><i className="fas fa-trash-alt fa-2x"></i></span>
                 <p className="dibs-error">No one has called dibs yet!</p>
               </div>
             )
@@ -290,6 +291,8 @@ class FreebieDetail extends Component {
             />
           </div>
         </div>
+
+        <CommentsContainer currentUser={this.props.currentUser} freebie={this.state.freebie} />
       </div>
     );
   };
