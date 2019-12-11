@@ -6,8 +6,10 @@ Dibs provides you with an quick and easy way to declutter your home, grab free f
 - HTML
 - CSS
 - MongoDB
+- Express
 - React
 - Bootstrap
+- Vietnamese Coffee
 
 ## Installation Steps
 Simply clone this repo and in your terminal, enter  
@@ -31,8 +33,7 @@ $npm i
 
 ## Future Features
 - Edit and delete comments
-- Points system for reliability of posters and dibbers
-- Public profiles
+- Points system to gauge reliability of posters and dibbers
 - Ability to upload photos from computer
 - Dib time counter on profile once a dib has been called
 - Use Google Maps API to show a map of where dib is located
