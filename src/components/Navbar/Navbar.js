@@ -32,7 +32,7 @@ class Navbar extends Component {
   render() {
     return (
       <>
-        <nav className="navbar navbar-expand-md navbar-light bg-light shadow-sm p-3 mb-5 bg-white rounded">
+        <nav className="navbar navbar-expand-md navbar-light bg-light shadow-sm p-3 bg-white rounded">
           <div className="container">
             <Link to="/"><span className="navbar-brand">Dibs!</span></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">

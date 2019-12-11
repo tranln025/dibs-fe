@@ -5,9 +5,9 @@ import FreebiesContainer from '../containers/FreebiesContainer/FreebiesContainer
 import ProfileContainer from '../containers/ProfileContainer/ProfileContainer';
 import FreebieDetail from '../components/FreebiesList/Freebies/FreebieDetail/FreebieDetail';
 
-export default ({ currentUser }) => (
+export default ({ currentUser, setCurrentUser }) => (
   <Switch>
-    <Route exact path="/" component={Landing} />
+    <Route exact path="/" render={() => <Landing currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
     <Route exact path="/freebies" render={() => <FreebiesContainer currentUser={currentUser} />} />
     <Route path="/freebies/:id" render={() => <FreebieDetail currentUser={currentUser} />} />
     <Route path="/profile" component={ProfileContainer} />
