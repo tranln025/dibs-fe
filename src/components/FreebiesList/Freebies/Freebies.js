@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import CardColumns from 'react-bootstrap/CardColumns'
+import CardDeck from 'react-bootstrap/CardDeck'
 import Card from 'react-bootstrap/Card';
 import { withRouter } from "react-router";
+import './Freebies.css';
 
 class Freebies extends Component {
 
@@ -27,9 +28,9 @@ class Freebies extends Component {
     });
   
     return (
-      <CardColumns>
+      <CardDeck>
         {freebies}
-      </CardColumns>
+      </CardDeck>
     );
   };
 };

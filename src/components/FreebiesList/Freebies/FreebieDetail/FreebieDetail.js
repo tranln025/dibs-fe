@@ -7,6 +7,7 @@ import 'moment-timezone';
 import EditModal from './EditModal';
 import DeleteModal from './DeleteModal';
 import './FreebieDetail.css'
+import claimed from './claimed.png'
 
 class FreebieDetail extends Component {
   state = {
@@ -129,12 +130,15 @@ class FreebieDetail extends Component {
           // if user is logged in and is author and a dib exists and freebie is NOT claimed
           if (!this.state.freebie.claimant) {
             return (
-              <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+              <div className="claimed-btn-block">
+                <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
+              </div>
             )
           // if user is logged in and is author and a dib exists and freebie IS claimed
           } else {
             return (
-              <></>
+              // <></>
+              <img className="claimed-label" src={claimed}/>
               // <h2 className="claimed-label">CLAIMED</h2>
             )
         };
@@ -143,16 +147,17 @@ class FreebieDetail extends Component {
           // if user is logged in and is author and no currentDib exists but freebie is claimed
           if (this.state.freebie.claimant) {
             return (
-              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+              // <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+              <img className="claimed-label" src={claimed}/>
             )
           // if user is logged in and is author and no currentDib exists and freebie is NOT claimed
           } else {
             return (
-              <>
-                <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-                <p className="freebie-validation-error">No one has called dibs yet!</p>
-              </>
+              <div className="author-control-btn-block">
+                <span className="author-control-btn" onClick={this.handleEditModalOpen} ><i class="fas fa-edit fa-2x"></i></span>
+                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} ><i class="fas fa-trash-alt fa-2x"></i></span>
+                <p className="dibs-error">No one has called dibs yet!</p>
+              </div>
             )
           }
         }
@@ -161,29 +166,34 @@ class FreebieDetail extends Component {
         // if user is logged in and is NOT author and dib exists
         if (this.state.currentDib) {
           return (
-            <Button 
-              onClick={this.createDib} 
-              className="btn btn-primary dibs-btn" 
-              title={this.state.currentDib ? "Item has been dibbed" : null} 
-              disabled={this.state.currentDib}>DIBS!
-            </Button>
-          )
-        // if user is logged in and is NOT author and no dib exists
-        } else {
-          // if user is logged in and is NOT author and no dib exists and freebie is claimed
-          if (this.state.freebie.claimant) {
-            return (
-              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
-            )
-          // if user is logged in and is NOT author and no dib exists and freebie is NOT claimed
-          } else {
-            return (
+            <div className="dibs-btn-block">
               <Button 
                 onClick={this.createDib} 
                 className="btn btn-primary dibs-btn" 
                 title={this.state.currentDib ? "Item has been dibbed" : null} 
                 disabled={this.state.currentDib}>DIBS!
               </Button>
+            </div>
+          )
+        // if user is logged in and is NOT author and no dib exists
+        } else {
+          // if user is logged in and is NOT author and no dib exists and freebie is claimed
+          if (this.state.freebie.claimant) {
+            return (
+              // <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+              <img className="claimed-label" src={claimed}/>
+            )
+          // if user is logged in and is NOT author and no dib exists and freebie is NOT claimed
+          } else {
+            return (
+              <div className="dibs-btn-block">
+                <Button 
+                  onClick={this.createDib} 
+                  className="btn btn-primary dibs-btn" 
+                  title={this.state.currentDib ? "Item has been dibbed" : null} 
+                  disabled={this.state.currentDib}>DIBS!
+                </Button>
+              </div>
             )
           }
         }
@@ -242,37 +252,44 @@ class FreebieDetail extends Component {
     const freebie = this.state.freebie;
     const author = this.state.author;
     return (
-      <div className="container">
-        <img className="freebie-photo" src={freebie.photo} alt={freebie.title} />
-        <h3>{freebie.title}</h3>
-        <p>{freebie.address}</p>
-        <p>Posted <Moment local format="MMM. DD, YYYY [at] h:MM a">{freebie.datePosted}</Moment></p>
-        <p>{freebie.description}</p>
-        <div className="seller-info">
-          <p>Seller Information</p>
-          <div className="row">
-            <div className="freebie-author-photo">
-              <img src={author.photo} alt={author.username} />
+      <div className="freebie-detail container">
+        <div className="row">
+          <div className="col-md-6">
+            <img className="freebie-photo" src={freebie.photo} alt={freebie.title} />
+          </div>
+          <div className="col-md-6">
+            <h3>{freebie.title}</h3>
+            <p>{freebie.address}</p>
+            <p>Posted <Moment local format="MMM. DD, YYYY [at] h:MM a">{freebie.datePosted}</Moment></p>
+            <p>{freebie.description}</p>
+            <hr />
+            <div className="seller-info">
+              <p>Seller Information</p>
+              <div className="row">
+                <div className="freebie-author-photo">
+                  <img src={author.photo} alt={author.username} />
+                </div>
+                <div className="freebie-author-info">
+                  <small>{author.username}</small>
+                  <br />
+                  <small>Dibber since <Moment local format="MMMM YYYY">{author.joinDate}</Moment></small>
+                </div>
+              </div>
             </div>
-            <div className="freebie-author-info">
-              <small>{author.username}</small>
-              <br />
-              <small>Dibber since <Moment local format="MMMM YYYY">{author.joinDate}</Moment></small>
-            </div>
+            {this.addControls()}
+            {this.showDibError()}
+            <EditModal 
+              freebie={this.state.freebie} 
+              editModalOpen={this.state.editModalOpen} 
+              handleEditModalOpen={this.handleEditModalOpen} 
+            />
+            <DeleteModal 
+              freebie={this.state.freebie}
+              deleteModalOpen={this.state.deleteModalOpen} 
+              handleDeleteModalOpen={this.handleDeleteModalOpen} 
+            />
           </div>
         </div>
-        {this.addControls()}
-        {this.showDibError()}
-        <EditModal 
-          freebie={this.state.freebie} 
-          editModalOpen={this.state.editModalOpen} 
-          handleEditModalOpen={this.handleEditModalOpen} 
-        />
-        <DeleteModal 
-          freebie={this.state.freebie}
-          deleteModalOpen={this.state.deleteModalOpen} 
-          handleDeleteModalOpen={this.handleDeleteModalOpen} 
-        />
       </div>
     );
   };

@@ -39,7 +39,7 @@ class Landing extends Component {
       <div className="landing">
         <div className="row">
           <div className="col-md-8">
-            <div className="hero">
+            <div className="landing-hero">
               <img src="https://images.unsplash.com/photo-1531263539449-56fdf29dfc4d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" />
             </div>
             <div className="about-dibs">
@@ -61,22 +61,22 @@ class Landing extends Component {
             <h3>Start Dibbin'</h3>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formGroupfirstName">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="First Name" type="text" name="firstName" value={this.state.firstName} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="First Name" type="text" name="firstName" value={this.state.firstName} />
               </Form.Group>
               <Form.Group controlId="formGrouplastName">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Last Name" type="text" name="lastName" value={this.state.lastName} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="Last Name" type="text" name="lastName" value={this.state.lastName} />
               </Form.Group>
               <Form.Group controlId="formGroupUsername">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Username" type="text" name="username" value={this.state.username} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="Username" type="text" name="username" value={this.state.username} />
               </Form.Group>
               <Form.Group controlId="formGroupEmail">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Email" type="email" name="email" value={this.state.email} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="Email" type="email" name="email" value={this.state.email} />
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Password" type="password" name="password" value={this.state.password} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="Password" type="password" name="password" value={this.state.password} />
               </Form.Group>
               <Form.Group controlId="formGroupPassword2">
-                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Confirm Password" type="password" name="password2" value={this.state.password2} />
+                <Form.Control required onChange={this.handleChange} className="landing-input" placeholder="Confirm Password" type="password" name="password2" value={this.state.password2} />
               </Form.Group>
               <Button className="btn btn-primary float-right" type="submit">Sign Up</Button>
             </Form>

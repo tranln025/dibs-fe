@@ -5,7 +5,7 @@ import './ProfileTabs.css';
 
 const ProfileTabs = props => {
   return (
-    <div className="profile-tabs">
+    <div className="profile-tabs col-md-8">
       <ul className="nav nav-tabs">
         <li><a data-toggle="tab" href="#myposts">My Posts</a></li>
         <li><a data-toggle="tab" href="#dibsclaimed">Dibs Claimed</a></li>

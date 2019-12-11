@@ -1,16 +1,25 @@
+.user-info {
+  padding: 20px !important;
+  text-align: center;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
 .avatar-container {
   position: relative;
   max-width: 200px;
+  margin: 10px auto 30px auto;
 }
 
 .avatar-image {
   opacity: 1;
   display: block;
-  width: 100%;
-  height: auto;
+  width: 200px;
+  height: 200px;
   transition: .5s ease;
   backface-visibility: hidden;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .middle {
