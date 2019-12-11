@@ -44,10 +44,10 @@ class Landing extends Component {
             </div>
             <div className="about-dibs">
               <div className="row">
-                <div className="col">
+                <div className="col-md-6">
                 Dibs provides you with an quick and easy way to declutter your home, grab free food nearby, or give gifts to strangers! Dibs is localized to San Francisco, so you know if you call dibs on an item or put something up for grabs, your dreams will come true within the hour. Sign up now to get dibbin'!
                 </div>
-                <div className="col">
+                <div className="col-md-6">
                   <p>"Dibs is literally the greatest thing ever. I've been grabbing free stuff left and right! Look at my hat. Look how cute. I got it from someone on Dibs!"</p>
                   <p className="testimony-author"> - Chulian, satisfied customer</p>
                   <hr />
