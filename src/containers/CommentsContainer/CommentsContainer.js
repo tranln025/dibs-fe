@@ -7,7 +7,7 @@ class CommentsContainer extends Component {
   state = {
     comments: [],
     content: "",
-    ajaxLoaded: false,
+    axiosLoaded: false,
   };
 
   fetchAllComments = () => {
@@ -22,7 +22,7 @@ class CommentsContainer extends Component {
         this.setState({
           comments: sortedComments,
           content: "",
-          ajaxLoaded: true,
+          axiosLoaded: true,
         })
       }
     })
@@ -54,13 +54,13 @@ class CommentsContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.ajaxLoaded !== prevState.ajaxLoaded) {
+    if (this.state.axiosLoaded !== prevState.axiosLoaded) {
       this.fetchAllComments();
     }
   }
 
-  ajaxIsLoaded = () => {
-    if (this.state.ajaxLoaded === true) {
+  axiosIsLoaded = () => {
+    if (this.state.axiosLoaded === true) {
       if (this.state.comments.length) {
         return (
           <Comments comments={this.state.comments} />
@@ -88,12 +88,7 @@ class CommentsContainer extends Component {
               <button type="button" className="btn btn-info pull-right" onClick={this.handleCommentSubmit}>Post</button>
               <div className="clearfix"></div>
               <hr />
-              {this.ajaxIsLoaded()}
-                {/* {this.state.comments.length ?
-                  <Comments comments={this.state.comments} />
-                  :
-                  <p>No comments yet</p>
-                } */}
+              {this.axiosIsLoaded()}
             </div>
           </div>
         </div>
