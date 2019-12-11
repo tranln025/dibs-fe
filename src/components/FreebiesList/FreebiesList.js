@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Freebies from './Freebies/Freebies';
+import './FreebiesList.css';
 
 class FreebiesList extends Component {
   componentDidMount() {

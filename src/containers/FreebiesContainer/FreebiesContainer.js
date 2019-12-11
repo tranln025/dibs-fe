@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Parallax, Background } from 'react-parallax';
 import FreebiesList from '../../components/FreebiesList/FreebiesList';
 import NewFreebieForm from '../../components/NewFreebieForm/NewFreebieForm';
 import axios from 'axios';
+import './FreebiesContainer.css';
 
 class FreebiesContainer extends Component {
   state = {
@@ -32,8 +34,23 @@ class FreebiesContainer extends Component {
   render() {
     return (
       <>
-        <h1>FreebiesContainer</h1>
-        <button onClick={this.handleFreebiesFormOpen}>Add Freebie</button>
+        <Parallax
+          className="hero"
+          blur={{ min: -15, max: 15 }}
+          bgImage={require('./grab-darken.jpg')}
+          bgImageAlt="the dog"
+          strength={-200}
+        >
+          <div className="parallax-cover">
+            <div className="parallax-inner">
+              <h1><b>UP FOR GRABS</b></h1>
+              <a onClick={this.handleFreebiesFormOpen}><i class="fas fa-plus-circle fa-3x"></i></a>
+            </div>
+          </div>
+
+        </Parallax>
+        
+        
         <FreebiesList
           freebies={this.state.freebies} 
           fetchFreebies={this.fetchFreebies} 

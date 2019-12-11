@@ -1,0 +1,27 @@
+.hero {
+  width: 100vw;
+  height: 40vh;
+  object-fit: cover;
+}
+
+h1 {
+  display: inline;
+  font-weight: 900;
+}
+
+.parallax-inner {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.parallax-inner i {
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.parallax-cover {
+  height: 40vh;
+}
