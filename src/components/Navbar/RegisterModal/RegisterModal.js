@@ -47,31 +47,31 @@ class RegisterModal extends Component {
               <Col>
                 <Form.Group controlId="formGroupfirstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control onChange={this.handleChange} type="text" name="firstName" value={this.state.firstName} />
+                  <Form.Control required onChange={this.handleChange} type="text" name="firstName" value={this.state.firstName} />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="formGrouplastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control onChange={this.handleChange} type="text" name="lastName" value={this.state.lastName} />
+                  <Form.Control required onChange={this.handleChange} type="text" name="lastName" value={this.state.lastName} />
                 </Form.Group>
               </Col>
             </Form.Row>
               <Form.Group controlId="formGroupUsername">
                 <Form.Label>Username</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="username" value={this.state.username} />
+                <Form.Control required onChange={this.handleChange} type="text" name="username" value={this.state.username} />
               </Form.Group>
               <Form.Group controlId="formGroupEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control onChange={this.handleChange} type="email" name="email" value={this.state.email} />
+                <Form.Control required onChange={this.handleChange} type="email" name="email" value={this.state.email} />
               </Form.Group>
             <Form.Group controlId="formGroupPassword"> 
               <Form.Label>Password</Form.Label>
-              <Form.Control onChange={this.handleChange} type="password" name="password" value={this.state.password} />
+              <Form.Control required onChange={this.handleChange} type="password" name="password" value={this.state.password} />
             </Form.Group>
             <Form.Group controlId="formGroupPassword2">
               <Form.Label>Confirm Password</Form.Label>
-              <Form.Control onChange={this.handleChange} type="password" name="password2" value={this.state.password2} />
+              <Form.Control required onChange={this.handleChange} type="password" name="password2" value={this.state.password2} />
             </Form.Group>
             <Button className="btn btn-primary float-right" type="submit">Sign Up</Button>
           </Form>

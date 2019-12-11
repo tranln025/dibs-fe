@@ -41,11 +41,11 @@ class LoginModal extends Component {
           <Form onSubmit={this.handleSubmit} >
             <Form.Group controlId="formGroupUsername">
               <Form.Label>Username</Form.Label>
-              <Form.Control onChange={this.handleChange} type="text" name="username" value={this.state.username} />
+              <Form.Control required onChange={this.handleChange} type="text" name="username" value={this.state.username} />
               </Form.Group>
             <Form.Group controlId="formGroupPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control onChange={this.handleChange} type="password" name="password" value={this.state.password} />
+              <Form.Control required onChange={this.handleChange} type="password" name="password" value={this.state.password} />
               </Form.Group>
             <Button className="btn btn-primary float-right" type="submit">Login</Button>
           </Form>

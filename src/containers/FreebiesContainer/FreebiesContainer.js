@@ -35,7 +35,7 @@ class FreebiesContainer extends Component {
     return (
       <>
         <Parallax
-          className="hero"
+          className="freebies-hero"
           blur={{ min: -15, max: 15 }}
           bgImage={require('./grab-darken.jpg')}
           bgImageAlt="the dog"
