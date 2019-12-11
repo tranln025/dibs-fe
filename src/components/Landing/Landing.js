@@ -45,10 +45,14 @@ class Landing extends Component {
             <div className="about-dibs">
               <div className="row">
                 <div className="col">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sagittis eu volutpat odio facilisis. Placerat orci nulla pellentesque dignissim. Mattis pellentesque id nibh tortor. Sapien eget mi proin sed libero. Volutpat diam ut venenatis tellus in metus vulputate eu. Nulla porttitor massa id neque aliquam vestibulum morbi blandit. Iaculis urna id volutpat lacus laoreet non.
+                Dibs provides you with an quick and easy way to declutter your home, grab free food nearby, or give gifts to strangers! Dibs is localized to San Francisco, so you know if you call dibs on an item or put something up for grabs, your dreams will come true within the hour. Sign up now to get dibbin'!
                 </div>
                 <div className="col">
-                  Id porta nibh venenatis cras sed felis. Donec pretium vulputate sapien nec sagittis aliquam. Lacus viverra vitae congue eu consequat ac felis donec et. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et netus. Pellentesque massa placerat duis ultricies lacus sed.
+                  <p>"Dibs is literally the greatest thing ever. I've been grabbing free stuff left and right! Look at my hat. Look how cute. I got it from someone on Dibs!"</p>
+                  <p className="testimony-author"> - Chulian, satisfied customer</p>
+                  <hr />
+                  <p>"I LOVE DIBS. I gave away 90% of my furniture and now I'm living my minimalist best life."</p>
+                  <p className="testimony-author"> - Chust Chay, another satisfied customer</p>
                 </div>
               </div>
             </div>
@@ -57,28 +61,22 @@ class Landing extends Component {
             <h3>Start Dibbin'</h3>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="formGroupfirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="firstName" value={this.state.firstName} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="First Name" type="text" name="firstName" value={this.state.firstName} />
               </Form.Group>
               <Form.Group controlId="formGrouplastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="lastName" value={this.state.lastName} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Last Name" type="text" name="lastName" value={this.state.lastName} />
               </Form.Group>
               <Form.Group controlId="formGroupUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control onChange={this.handleChange} type="text" name="username" value={this.state.username} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Username" type="text" name="username" value={this.state.username} />
               </Form.Group>
               <Form.Group controlId="formGroupEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control onChange={this.handleChange} type="email" name="email" value={this.state.email} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Email" type="email" name="email" value={this.state.email} />
               </Form.Group>
               <Form.Group controlId="formGroupPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control onChange={this.handleChange} type="password" name="password" value={this.state.password} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Password" type="password" name="password" value={this.state.password} />
               </Form.Group>
               <Form.Group controlId="formGroupPassword2">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control onChange={this.handleChange} type="password" name="password2" value={this.state.password2} />
+                <Form.Control onChange={this.handleChange} className="landing-input" placeholder="Confirm Password" type="password" name="password2" value={this.state.password2} />
               </Form.Group>
               <Button className="btn btn-primary float-right" type="submit">Sign Up</Button>
             </Form>
@@ -92,3 +90,6 @@ class Landing extends Component {
 }
 
 export default withRouter(Landing);
+
+// TODO change hero to carousel
+// additional image: https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80

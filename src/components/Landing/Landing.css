@@ -1,9 +1,16 @@
 .hero img {
   width: 100%;
+  height: 60vh;
+  object-fit: cover;
+  overflow: hide;
 }
 
 .about-dibs {
   margin: 20px 30px;
+}
+
+.about-dibs .col {
+  margin: 0 10px;
 }
 
 .register-form {
@@ -27,4 +34,27 @@ form {
 
 .col-md-8 {
   padding: 0 !important;
+}
+
+.btn-primary {
+  background-color: rgba(15, 185, 177, 1) !important;
+  border-color: rgba(15, 185, 177, 1) !important;
+}
+
+.btn-primary:hover {
+  background-color: rgb(14, 163, 156) !important;
+  border-color: rgb(14, 163, 156) !important;
+}
+
+button {
+  font-family: 'Raleway', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.landing-input {
+  margin-bottom: 30px;
+}
+
+.testimony-author {
+  text-align: right;
 }
