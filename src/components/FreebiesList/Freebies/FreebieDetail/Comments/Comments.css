@@ -1,0 +1,31 @@
+.media img {
+  width:64px;
+  height:64px;
+  border:2px solid #e5e7e8;
+  margin-right: 15px;
+  border-radius: 50%;
+}
+
+.media {
+  border-bottom:1px dashed #efefef;
+  margin-bottom:25px;
+}
+
+.nav-tabs-ul {
+  padding: 5px;
+}
+
+.author-name {
+  color: #3c763d;
+  font-weight: 700;
+  text-align: left;
+  margin-right: 15px;
+}
+
+.row {
+  text-align: left;
+}
+
+.media-list-ul {
+  display: inline-block;
+}
