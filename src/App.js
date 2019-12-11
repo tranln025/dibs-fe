@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar currentUser={this.state.currentUser} setCurrentUser={this.setCurrentUser} logout={this.logout} />
-        <Routes currentUser={this.state.currentUser} />
+        <Routes currentUser={this.state.currentUser} setCurrentUser={this.setCurrentUser} />
       </div>
     )
   }

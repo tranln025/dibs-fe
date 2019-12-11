@@ -25,7 +25,7 @@ class LoginModal extends Component {
     })
     .then((res) => {
       this.props.setCurrentUser(res.data.data);
-      this.props.history.push(`/users/${res.data.data}`);
+      this.props.history.push(`/freebies`);
       this.props.handleLoginModalOpen();
     })
     .catch((error) => console.log(error));

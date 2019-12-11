@@ -64,7 +64,6 @@ class FreebieDetail extends Component {
   };
 
   handleEditModalOpen = () => {
-    console.log('handleEditModalOpen')
     this.setState((prevState) => {
       return {
         editModalOpen: !prevState.editModalOpen
@@ -73,7 +72,6 @@ class FreebieDetail extends Component {
   };
 
   handleDeleteModalOpen = () => {
-    console.log('handleDeleteModalOpen')
     this.setState((prevState) => {
       return {
         deleteModalOpen: !prevState.deleteModalOpen
@@ -116,37 +114,82 @@ class FreebieDetail extends Component {
       // Remove currentDib from state
       this.setState({
         currentDib: null,
-      });
+      }, this.fetchPostInfo)
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
   };
 
-  addAuthorControls = () => {
-    // if (this.state.currentDib) {
-      return (
-        <>
-          <div className="author-controls">
-            <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-            <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-            {this.state.currentDib ?
+  addControls = () => {
+    // if a user is logged in
+    if (this.props.currentUser) {
+      // if user is logged in and is author
+      if (this.state.author._id === this.props.currentUser) {
+        // if user is logged in and is author and dib exists
+        if (this.state.currentDib) {
+          // if user is logged in and is author and a dib exists and freebie is NOT claimed
+          if (!this.state.freebie.claimant) {
+            return (
               <Button onClick={this.markAsClaimed} variant="warning">Mark as Claimed</Button>
-              : null
-            }
-          </div>
-          <EditModal 
-            freebie={this.state.freebie} 
-            editModalOpen={this.state.editModalOpen} 
-            handleEditModalOpen={this.handleEditModalOpen} 
-          />
-          <DeleteModal 
-            freebie={this.state.freebie} 
-            deleteModalOpen={this.state.deleteModalOpen} 
-            handleDeleteModalOpen={this.handleDeleteModalOpen} 
-          />
-        </>
-      );
-    // }
-  };
+            )
+          // if user is logged in and is author and a dib exists and freebie IS claimed
+          } else {
+            return (
+              <></>
+              // <h2 className="claimed-label">CLAIMED</h2>
+            )
+        };
+        // if user is logged in and is author and no currentDib exists
+        } else {
+          // if user is logged in and is author and no currentDib exists but freebie is claimed
+          if (this.state.freebie.claimant) {
+            return (
+              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+            )
+          // if user is logged in and is author and no currentDib exists and freebie is NOT claimed
+          } else {
+            return (
+              <>
+                <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+                <p className="freebie-validation-error">No one has called dibs yet!</p>
+              </>
+            )
+          }
+        }
+      // if user is logged in and is NOT author
+      } else {
+        // if user is logged in and is NOT author and dib exists
+        if (this.state.currentDib) {
+          return (
+            <Button 
+              onClick={this.createDib} 
+              className="btn btn-primary dibs-btn" 
+              title={this.state.currentDib ? "Item has been dibbed" : null} 
+              disabled={this.state.currentDib}>DIBS!
+            </Button>
+          )
+        // if user is logged in and is NOT author and no dib exists
+        } else {
+          // if user is logged in and is NOT author and no dib exists and freebie is claimed
+          if (this.state.freebie.claimant) {
+            return (
+              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+            )
+          // if user is logged in and is NOT author and no dib exists and freebie is NOT claimed
+          } else {
+            return (
+              <Button 
+                onClick={this.createDib} 
+                className="btn btn-primary dibs-btn" 
+                title={this.state.currentDib ? "Item has been dibbed" : null} 
+                disabled={this.state.currentDib}>DIBS!
+              </Button>
+            )
+          }
+        }
+      }
+    }
+  }
 
   checkForDib = () => {
     let dib = this.state.currentDib;
@@ -186,7 +229,7 @@ class FreebieDetail extends Component {
       )
     } else if (this.state.currentDib && !this.state.dibberIsCurrentUser) {
       return (
-        <p className="dibs-error">Someone has called dibs!</p>
+        <></>
       )
     } else {
       return (
@@ -218,18 +261,18 @@ class FreebieDetail extends Component {
             </div>
           </div>
         </div>
-        {this.state.author._id === this.props.currentUser ?
-          this.addAuthorControls() 
-          :
-          <Button 
-            onClick={this.createDib} 
-            className="btn btn-primary dibs-btn" 
-            title={this.state.currentDib ? "Item has been dibbed" : null} 
-            disabled={this.state.currentDib}>DIBS!
-          </Button>
-        }
+        {this.addControls()}
         {this.showDibError()}
-        {this.state.freebie.claimant ? <h2 className="claimed-label">CLAIMED</h2> : null}
+        <EditModal 
+          freebie={this.state.freebie} 
+          editModalOpen={this.state.editModalOpen} 
+          handleEditModalOpen={this.handleEditModalOpen} 
+        />
+        <DeleteModal 
+          freebie={this.state.freebie}
+          deleteModalOpen={this.state.deleteModalOpen} 
+          handleDeleteModalOpen={this.handleDeleteModalOpen} 
+        />
       </div>
     );
   };

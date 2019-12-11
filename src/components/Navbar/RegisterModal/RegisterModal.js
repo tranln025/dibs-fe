@@ -28,16 +28,9 @@ class RegisterModal extends Component {
       withCredentials: true,
     })
     .then((res) => {
-      if (res.data.status === 400 || res.data.status === 500) {
-        this.setState({
-          usernameValid: false,
-          emailValid: false,
-        })
-      } else {
-        this.props.setCurrentUser(res.data.data);
-        this.props.history.push(`/users/${res.data.data}`);
-        this.props.handleRegisterModalOpen();
-      }
+      this.props.setCurrentUser(res.data.data);
+      this.props.history.push(`/freebies`);
+      this.props.handleRegisterModalOpen();
     })
     .catch(err => console.log(err))
   };
@@ -72,7 +65,7 @@ class RegisterModal extends Component {
                 <Form.Label>Email</Form.Label>
                 <Form.Control onChange={this.handleChange} type="email" name="email" value={this.state.email} />
               </Form.Group>
-            <Form.Group controlId="formGroupPassword">
+            <Form.Group controlId="formGroupPassword"> 
               <Form.Label>Password</Form.Label>
               <Form.Control onChange={this.handleChange} type="password" name="password" value={this.state.password} />
             </Form.Group>

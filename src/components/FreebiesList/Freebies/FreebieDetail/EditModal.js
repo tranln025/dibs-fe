@@ -13,6 +13,18 @@ class EditModal extends Component {
     author: this.props.freebie.author,
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.freebie !== prevProps.freebie) {
+      this.setState({
+        title: this.props.freebie.title,
+        address: this.props.freebie.address,
+        photo: this.props.freebie.photo,
+        description: this.props.freebie.description,
+        author: this.props.freebie.author,    
+      });
+    };
+  };
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,

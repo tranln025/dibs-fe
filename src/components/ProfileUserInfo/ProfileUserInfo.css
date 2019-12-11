@@ -1,24 +1,16 @@
-.profile-tabs {
-  width: 60%;
-  float: right;
-}
-
-.nav-tabs {
-  text-align: center;
-}
-
-.img-overlay-container {
+.avatar-container {
   position: relative;
-  width: 50%;
+  max-width: 200px;
 }
 
-.post-image {
+.avatar-image {
   opacity: 1;
   display: block;
   width: 100%;
   height: auto;
   transition: .5s ease;
   backface-visibility: hidden;
+  border-radius: 50%;
 }
 
 .middle {
@@ -32,12 +24,14 @@
   text-align: center;
 }
 
-.img-overlay-container:hover .post-image {
+.avatar-container:hover .avatar-image {
   opacity: 0.3;
+  cursor: pointer;
 }
 
-.img-overlay-container:hover .middle {
+.avatar-container:hover .middle {
   opacity: 1;
+  cursor: pointer;
 }
 
 .text {

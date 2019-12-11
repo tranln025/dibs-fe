@@ -6,7 +6,7 @@ import axios from 'axios';
 
 class EditModal extends Component {
   state = {
-    photo: '',
+    photo: this.props.userObject.photo,
   };
 
   handleChange = (event) => {

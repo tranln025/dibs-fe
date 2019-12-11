@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import Button from 'react-bootstrap/Button';
 import RegisterModal from './RegisterModal/RegisterModal';
 import LoginModal from './LoginModal/LoginModal';
+import './Navbar.css';
 
 class Navbar extends Component {
   state = {
@@ -31,9 +32,9 @@ class Navbar extends Component {
   render() {
     return (
       <>
-        <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-md navbar-light bg-light shadow-sm p-3 bg-white rounded">
           <div className="container">
-            <span className="navbar-brand">Dibs!</span>
+            <Link to="/"><span className="navbar-brand">Dibs!</span></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -43,10 +44,10 @@ class Navbar extends Component {
                 {!this.props.currentUser ?
                 <>
                 <li className="nav-item">
-                  <Button onClick={this.handleRegisterModalOpen} variant="info" className="nav-link">Register <span className="sr-only">(current)</span></Button>
+                  <a onClick={this.handleLoginModalOpen} variant="info" className="nav-link login">Log In </a>
                 </li>
                 <li className="nav-item active">
-                  <Button onClick={this.handleLoginModalOpen} variant="info" className="nav-link">Log In </Button>
+                  <Button onClick={this.handleRegisterModalOpen} variant="info" className="nav-link register">Register <span className="sr-only">(current)</span></Button>
                 </li>
                 </> : <>
                 <li className="nav-item">
