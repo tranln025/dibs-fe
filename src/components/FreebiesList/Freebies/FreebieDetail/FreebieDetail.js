@@ -124,7 +124,7 @@ class FreebieDetail extends Component {
     if (this.props.currentUser) {
       // if user is logged in and is author
       if (this.state.author._id === this.props.currentUser) {
-        // if user is logged in and is author and someone has made a dib
+        // if user is logged in and is author and dib exists
         if (this.state.currentDib) {
           // if user is logged in and is author and a dib exists and freebie is NOT claimed
           if (!this.state.freebie.claimant) {
@@ -141,40 +141,53 @@ class FreebieDetail extends Component {
         // if user is logged in and is author and no currentDib exists
         } else {
           // if user is logged in and is author and no currentDib exists but freebie is claimed
-          if () {
+          if (this.state.freebie.claimant) {
             return (
-              <h2 className="claimed-label">CLAIMED</h2>
+              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
             )
+          // if user is logged in and is author and no currentDib exists and freebie is NOT claimed
           } else {
             return (
-
+              <>
+                <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
+                <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
+                <p className="freebie-validation-error">No one has called dibs yet!</p>
+              </>
             )
           }
-          return (
-            <>
-              <span className="author-control-btn" onClick={this.handleEditModalOpen} >Edit</span>
-              <span className="author-control-btn" onClick={this.handleDeleteModalOpen} >Delete</span>
-              <p className="freebie-validation-error">No one has called dibs yet!</p>
-            </>
-          )
         }
       // if user is logged in and is NOT author
       } else {
-        return (
-          // author is not user
-          <Button 
-            onClick={this.createDib} 
-            className="btn btn-primary dibs-btn" 
-            title={this.state.currentDib ? "Item has been dibbed" : null} 
-            disabled={this.state.currentDib}>DIBS!
-          </Button>
-        )
+        // if user is logged in and is NOT author and dib exists
+        if (this.state.currentDib) {
+          return (
+            <Button 
+              onClick={this.createDib} 
+              className="btn btn-primary dibs-btn" 
+              title={this.state.currentDib ? "Item has been dibbed" : null} 
+              disabled={this.state.currentDib}>DIBS!
+            </Button>
+          )
+        // if user is logged in and is NOT author and no dib exists
+        } else {
+          // if user is logged in and is NOT author and no dib exists and freebie is claimed
+          if (this.state.freebie.claimant) {
+            return (
+              <h2 className="claimed-label">CLAIMED by {this.state.freebie.claimant.username}</h2>
+            )
+          // if user is logged in and is NOT author and no dib exists and freebie is NOT claimed
+          } else {
+            return (
+              <Button 
+                onClick={this.createDib} 
+                className="btn btn-primary dibs-btn" 
+                title={this.state.currentDib ? "Item has been dibbed" : null} 
+                disabled={this.state.currentDib}>DIBS!
+              </Button>
+            )
+          }
+        }
       }
-    // if a user is NOT logged in
-    } else {
-      return (
-        <p className="freebie-validation-error">Log in or register to call dibs!</p>
-      )
     }
   }
 
@@ -216,7 +229,7 @@ class FreebieDetail extends Component {
       )
     } else if (this.state.currentDib && !this.state.dibberIsCurrentUser) {
       return (
-        <p className="dibs-error">Someone has called dibs!</p>
+        <></>
       )
     } else {
       return (
