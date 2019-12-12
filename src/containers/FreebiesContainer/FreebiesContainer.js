@@ -44,7 +44,7 @@ class FreebiesContainer extends Component {
           <div className="parallax-cover">
             <div className="parallax-inner">
               <h1><b>UP FOR GRABS</b></h1>
-              <a onClick={this.handleFreebiesFormOpen}><i class="fas fa-plus-circle fa-3x"></i></a>
+              <a onClick={this.handleFreebiesFormOpen}><i className="fas fa-plus-circle fa-3x"></i></a>
             </div>
           </div>
 
