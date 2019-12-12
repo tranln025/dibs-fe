@@ -9,7 +9,6 @@ class ProfileUserInfo extends Component {
   state = {
     userObject: {},
     editAvatarModal: false,
-    // activeDib: {},
   };
 
   fetchUserInfo = () => {
@@ -25,22 +24,8 @@ class ProfileUserInfo extends Component {
     .catch(err => console.log(err))
   }
 
-  // getActiveDib = () => {
-  //   axios.get(`${process.env.REACT_APP_API_URL}/posts`, {
-  //     withCredentials: true,
-  //   })
-  //   .then(res => {
-  //     let activeDib = res.data.data.filter(post => post.currentDib && post.currentDib.dibber === this.state.userObject._id);
-  //     this.setState({
-  //       activeDib,
-  //     })
-  //   })
-  //   .catch(err => console.log(err))
-  // }
-
   componentDidMount() {
     this.fetchUserInfo();
-    // this.getActiveDib();
   }
 
   handleEditAvatarModal = () => {
