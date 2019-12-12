@@ -51,7 +51,7 @@ class Landing extends Component {
                   <p>"Dibs is literally the greatest thing ever. I've been grabbing free stuff left and right! Look at my hat. Look how cute. I got it from someone on Dibs!"</p>
                   <p className="testimony-author"> - Chulian, satisfied customer</p>
                   <hr />
-                  <p>"I LOVE DIBS. I gave away 90% of my furniture and now I'm living my minimalist best life."</p>
+                  <p>"I LOVE DIBS. I gave away 90% of my furniture and now I'm living my best minimalist life."</p>
                   <p className="testimony-author"> - Chust Chay, another satisfied customer</p>
                 </div>
               </div>
@@ -90,6 +90,3 @@ class Landing extends Component {
 }
 
 export default withRouter(Landing);
-
-// TODO change hero to carousel
-// additional image: https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80

@@ -38,7 +38,6 @@ class FreebieDetail extends Component {
   };
 
   createDib = () => {
-    console.log('dibs clicked');
     const body = {
       post: this.state.freebie._id,
       dibber: this.props.currentUser,
@@ -57,7 +56,6 @@ class FreebieDetail extends Component {
   };
 
   deleteDib = () => {
-    console.log('dib deleted');
     axios.delete(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`)
     .then((res) => {
       this.fetchPostInfo();
@@ -82,17 +80,10 @@ class FreebieDetail extends Component {
   };
 
   markAsClaimed = () => {
-    console.log('markAsClaimed');
-    
     // Mark dib as claimed: true
-    console.log("dib IDDDDD >>> ", this.state.currentDib._id);
     axios.put(`${process.env.REACT_APP_API_URL}/dibs/${this.state.currentDib._id}`,
       {claimed: true}, 
       { withCredentials: true, })
-    .then(res => {
-      console.log("dib data after claimed: true >>", res.data)
-    })
-    .then()
     .catch(err => console.log(err));
 
     // Add dib to User's dibsClaimed array
@@ -102,9 +93,6 @@ class FreebieDetail extends Component {
         dibId: this.state.currentDib._id,
       }
     })
-    .then(res => {
-      console.log("add dibs to dibsClaimed res >>>", res);
-    })
     .catch(err => console.log(err));
 
     // Remove currentDib and add dibber as claimant from post instance
@@ -112,7 +100,6 @@ class FreebieDetail extends Component {
       { currentDib: null, claimant: this.state.currentDib.dibber }, 
       { withCredentials: true, })
     .then(res => {
-      console.log(res);
       // Remove currentDib from state
       this.setState({
         currentDib: null,
