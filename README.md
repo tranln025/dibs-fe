@@ -1,5 +1,5 @@
 # Dibs!
-Dibs provides you with an quick and easy way to declutter your home, grab free food nearby, or give gifts to strangers! Dibs is localized to San Francisco, so you know if you call dibs on an item or put something up for grabs, your dreams will come true within the hour. Sign up now to get dibbin'!
+Dibs provides you with a quick and easy way to declutter your home, grab free food nearby, or give gifts to strangers! Dibs is localized to San Francisco, so you know if you call dibs on an item or put something up for grabs, your dreams will come true within the hour. Sign up now to get dibbin'!
 
 ## Technologies Used
 - JavaScript
